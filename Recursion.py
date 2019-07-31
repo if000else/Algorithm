@@ -8,4 +8,10 @@ def sum(my_list):
 	else:
 		return my_list[0]
 
+#Answer
+def sum(list):
+    if list == []:
+        return 0
+    return list[0] + sum(list[1:])
+sum([1,2,4,5,6])
 
