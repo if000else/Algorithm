@@ -15,3 +15,10 @@ def sum(list):
     return list[0] + sum(list[1:])
 sum([1,2,4,5,6])
 
+#define a conunt()
+
+def conut(lis):
+    if lis == []:
+        return 0
+    return 1 + conut(lis[1:])
+count([1,2,4,5,6])
