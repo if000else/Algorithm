@@ -7,13 +7,57 @@
 还有一个问题，当吉他到钢琴的权值为15时，就有两条路径都是35，那这个算法会找出两个吗？
 可能这个算法的实际用途在地图方面更加广泛，缺乏这方面的知识，不敢妄下结论。
 '''
-def find_lowest_cost_node(costs):
-    lowest_cost = float("inf")
-    lowest_cost_node = None
-    for node in costs:
-        cost = costs[node]
-        if cost < lowest_cost and node not in processed:
-            lowest_cost = cost
-            lowest_cost_node = node
-    return lowest_cost_node
-    
+# initial data
+graph = {
+    'start': {'post': 0, 'album': 5},
+    'post': {'guitar': 30, 'drum': 35},
+    'album': {'guitar': 15, 'drum': 20},
+    'guitar': {'end': 20, },
+    'drum': {'end': 10, },
+    'end': {},
+}
+costs = {}
+processed = []
+parent = {}
+
+
+# function
+def lowest_node():
+    local_node = None
+    lowest_cost = float('inf')
+    if not processed:
+        for k, v in graph['start'].items():
+            costs[k] = v
+        processed.append('start')
+        local_node='start'
+
+
+    for k, v in costs.items():
+        if v < lowest_cost and k not in processed:
+            local_node = k
+            lowest_cost = v
+    return local_node
+
+
+# main
+
+node = lowest_node()
+while node:
+    for neighbor in graph[node].keys():
+        new_cost = costs[node] + graph[node][neighbor]
+        if neighbor not in costs:
+            costs[neighbor]=float('inf')
+        if new_cost < costs[neighbor]:
+            costs[neighbor] = new_cost
+            parent[neighbor] = node
+    processed.append(node)
+
+    node = lowest_node()
+print(costs)
+print('The path is:')
+for v in parent.values():
+    print(v,end='\r')
+
+
+
+
