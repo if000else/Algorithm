@@ -25,6 +25,7 @@ def lowest_node():
     if not processed:
         for k, v in graph['start'].items():
             costs[k] = v
+            parent[k]='start'
         processed.append('start')
         local_node='start'
 
