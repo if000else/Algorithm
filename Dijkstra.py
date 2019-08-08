@@ -20,6 +20,7 @@ parent = {}
 
 # function
 def lowest_node():
+    #初始化操作，默认第一步是‘start’
     local_node = None
     lowest_cost = float('inf')
     if not processed:
@@ -29,7 +30,7 @@ def lowest_node():
         processed.append('start')
         local_node='start'
 
-
+    #在列表中插找最小值，找到就赋值给变量
     for k, v in costs.items():
         if v < lowest_cost and k not in processed:
             local_node = k
@@ -43,19 +44,21 @@ node = lowest_node()
 while node:
     for neighbor in graph[node].keys():
         new_cost = costs[node] + graph[node][neighbor]
-        if neighbor not in costs:
+        if neighbor not in costs:#避免取不到数据
             costs[neighbor]=float('inf')
-        if new_cost < costs[neighbor]:
+        if new_cost < costs[neighbor]:#查找到最小，就赋值给变量
             costs[neighbor] = new_cost
             parent[neighbor] = node
-    processed.append(node)
+    processed.append(node)#当前节点已处理（可能在列表中会重复，但不影响）
 
-    node = lowest_node()
+    node = lowest_node()#继续取下一个节点
 print(costs)
-print('The path is:')
-for v in parent.values():
-    print(v,end='\r')
 
 
+'''
+迪克斯特拉算法总结：
+使用范围：非负加权图中查找最短路径（负边权要用贝尔曼-福德算法）
+核心思想：在数据中循环查找
+'''
 
 
